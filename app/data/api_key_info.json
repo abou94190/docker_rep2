@@ -1,0 +1,31 @@
+{
+    "status": {
+        "timestamp": "2024-05-06T12:28:54.521Z",
+        "error_code": 0,
+        "error_message": null,
+        "elapsed": 3,
+        "credit_count": 0,
+        "notice": null
+    },
+    "data": {
+        "plan": {
+            "credit_limit_monthly": 10000,
+            "credit_limit_monthly_reset": "In 25 days, 11 hours, 31 minutes",
+            "credit_limit_monthly_reset_timestamp": "2024-06-01T00:00:00.000Z",
+            "rate_limit_minute": 30
+        },
+        "usage": {
+            "current_minute": {
+                "requests_made": 0,
+                "requests_left": 30
+            },
+            "current_day": {
+                "credits_used": 155
+            },
+            "current_month": {
+                "credits_used": 278,
+                "credits_left": 9722
+            }
+        }
+    }
+}
