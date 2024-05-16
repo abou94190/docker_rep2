@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from app.api.v1.user import router
 import json
+from app.controllers.function_graph import load_json_data, create_graphs_from_json
 import os
 app = FastAPI()
 
