@@ -1,5 +1,11 @@
+# app/controllers/function_graph.py
 import json
 import matplotlib.pyplot as plt
+import io
+import base64
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def load_json_data(file_path):
@@ -9,19 +15,24 @@ def load_json_data(file_path):
 
 
 def create_graphs_from_json(data):
-    # Par exemple, data pourrait avoir une structure comme :
-    # {
-    #     "graph1": {"x": [1, 2, 3], "y": [4, 5, 6]},
-    #     "graph2": {"x": [1, 2, 3], "y": [7, 8, 9]}
-    # }
-
+    images = {}
     for graph_name, graph_data in data.items():
-        plt.figure()
-        plt.plot(graph_data['x'], graph_data['y'])
-        plt.title(graph_name)
-        plt.xlabel('X-axis label')
-        plt.ylabel('Y-axis label')
-        plt.savefig(f"{graph_name}.png")  # Sauve chaque graph en fichier PNG
-        plt.close()
-
-    print("Graphiques créés et sauvegardés.")
+        try:
+            logger.info(f"Creating graph for {graph_name}")
+            plt.figure()
+            plt.plot(graph_data['x'], graph_data['y'])
+            plt.title(graph_name)
+            plt.xlabel('X-axis label')
+            plt.ylabel('Y-axis label')
+            
+            buf = io.BytesIO()
+            plt.savefig(buf, format='png')
+            buf.seek(0)
+            plt.close()
+            
+            image_base64 = base64.b64encode(buf.read()).decode('utf-8')
+            images[graph_name] = image_base64
+        except Exception as e:
+            logger.error(f"Error creating graph {graph_name}: {e}")
+            raise
+    return images
